@@ -1,8 +1,10 @@
-import dotenv from "dotenv/config";
-import express from "express";
-import database from "./connection/database";
-import router from "./routes/router";
-import cors from "cors";
+const dotenv = require("dotenv/config")
+const express = require("express")
+const database =  require("./connection/database")
+const router = require("./routes/router")
+const cors = require("cors")
+
+import patientModel from './models/Patient'
 
 const server = express();
 
@@ -21,7 +23,7 @@ database
   .catch((err) => {
     console.log(err);
   });
-  
+
 server.listen(3000, (err) => {
   if (err) throw err;
   console.log("Server ready on http://localhost:3000");
