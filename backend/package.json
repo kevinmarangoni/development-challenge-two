@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm-run-all dev:*",
+    "dev:services": "docker-compose -f ./docker-compose.yml up -d",
+    "dev:server": "nodemon src/server.js",
+    "services:stop": "docker-compose -f ./docker-compose.yml down"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +18,14 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
     "sequelize": "^6.28.0",
-    "sequelize-cli": "^6.5.2"
+    "sequelize-cli": "^6.5.2",
+    "sucrase": "^3.29.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "sucrase": "^3.29.0"
   }
 }

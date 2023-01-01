@@ -1,0 +1,18 @@
+version: '3.3'
+volumes:
+  my-db:
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'medcloud-test'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'senhaforte'
+      MYSQL_ROOT_PASSWORD: ''
+    ports:
+      - '9966:3306'
+    expose:
+      - '9966'
+    volumes:
+      - my-db:/var/lib/mysql
