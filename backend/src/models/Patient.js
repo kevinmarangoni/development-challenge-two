@@ -1,13 +1,14 @@
-import Sequelize from 'sequelize';
-import database from '../connection/database';
+const Sequelize = require('sequelize');
+const database = require('../connection/database');
+const PatientSeed = require('../../database/seeds/PatientSeeder')
 
-const Patients = database.define(`patients`, {
+export const Patients = database.define(`patients`, {
     id :{
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
-        unique: true
+        unique: true 
     },
     firstName:{
         type: Sequelize.STRING,
@@ -37,18 +38,22 @@ const Patients = database.define(`patients`, {
 })
 Patients.paranoid = true
 Patients.timestamps = true
-
-if (process.env.NODE_ENV === 'development') {
-    Patients.sync({force:false});
+Patients.sync({force:false});
     Patients.afterSync(async () => {
         Patients.findAll().then( async (patient) => {
             if (patient.length === 0) {
                 console.log('Patients table empty');
-                // Patients.bulkCreate(SeedDevUser);
-                // console.log('Patients table seeded');
+                
+                try{
+                    Patients.bulkCreate(PatientSeed);
+                }
+                catch(err){
+                    console.log(err)
+                }
+                
+                console.log('Patients table seeded');
             }
         });
-    });
-}
+    })
 
-module.exports = Patients
+export default Patients
